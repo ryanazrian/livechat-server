@@ -1,6 +1,8 @@
 package com.example.ryanazrian.livechat.controllers;
 
 
+import com.example.ryanazrian.livechat.model.ExampleModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,11 @@ public class ExampleController {
     }
 
     @PostMapping(path = "/members", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> addMember(@RequestBody String ast){
-        System.out.println(ast);
+    public ResponseEntity<Object> addMember(@RequestBody ExampleModel model){
+        System.out.println(model.getEmail());
+        System.out.println(model.getPassword());
 
-        return ResponseEntity.ok("MANTAP");
+        return new ResponseEntity<Object>(model, HttpStatus.OK);
     }
 
 }
