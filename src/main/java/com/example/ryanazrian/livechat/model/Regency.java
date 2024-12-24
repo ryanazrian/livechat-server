@@ -1,6 +1,7 @@
 package com.example.ryanazrian.livechat.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "regencies")
@@ -18,8 +19,8 @@ public class Regency {
 //    @JoinColumn(name = "province_id", nullable = false)
 //    private Province province;
 //
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regency")
-//    private List<District> districts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "regency")
+    private List<District> districts;
 
     public Long getId() {
         return id;
@@ -37,13 +38,13 @@ public class Regency {
         this.name = name;
     }
 
-//    public List<District> getDistricts() {
-//        return districts;
-//    }
-//
-//    public void setDistricts(List<District> districts) {
-//        this.districts = districts;
-//    }
+    public List<District> getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(List<District> districts) {
+        this.districts = districts;
+    }
 
 
     public Long getProvinceId() {

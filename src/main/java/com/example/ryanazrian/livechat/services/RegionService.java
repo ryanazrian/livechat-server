@@ -19,7 +19,7 @@ public class RegionService {
         List<RegencyResponse> regencyResponses = new ArrayList<>();
 
         for (Regency regency : regencies) {
-            regencyResponses.add(new RegencyResponse(regency.getId(), regency.getName(), regency.getProvinceId()));
+            regencyResponses.add(new RegencyResponse(regency.getId(), regency.getName(), regency.getProvinceId(), regency.getDistricts()));
         }
 
         return regencyResponses;
@@ -30,7 +30,7 @@ public class RegionService {
         List<RegencyResponse> regencyResponses = new ArrayList<>();
 
         for (Regency regency : regencies) {
-            regencyResponses.add(new RegencyResponse(regency.getId(), regency.getName(), provinceId));
+            regencyResponses.add(new RegencyResponse(regency.getId(), regency.getName(), provinceId, regency.getDistricts()));
         }
 
         return regencyResponses;

@@ -1,6 +1,8 @@
 package com.example.ryanazrian.livechat.payload.region;
 
-public class ProvinceResponse {
+import java.io.Serializable;
+
+public class ProvinceResponse implements Serializable {
     private Long id;
     private String name;
 
@@ -24,4 +26,10 @@ public class ProvinceResponse {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "User{id='" + id + "', name='" + name + "}";
+    }
+
 }

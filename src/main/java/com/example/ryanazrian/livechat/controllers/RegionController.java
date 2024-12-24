@@ -1,14 +1,15 @@
 package com.example.ryanazrian.livechat.controllers;
 
 import com.example.ryanazrian.livechat.payload.region.ProvinceRegencyResponse;
-import com.example.ryanazrian.livechat.repository.ProvinceRepository;
-import com.example.ryanazrian.livechat.repository.RegencyRepository;
 import com.example.ryanazrian.livechat.services.ProvinceService;
 import com.example.ryanazrian.livechat.services.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/region")
 public class RegionController {
-
-    @Autowired
-    ProvinceRepository provinceRepository;
-
-    @Autowired
-    RegencyRepository regencyRepository;
-
     @Autowired
     RegionService regionService;
 
@@ -34,6 +28,17 @@ public class RegionController {
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> allProvince() {
         return new ResponseEntity<>(provinceService.getAllProvince(), HttpStatus.OK);
+    }
+
+    @GetMapping("/allProvincePagination")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public ResponseEntity<?> allProvincePagination(@RequestParam(value = "offset", required = false) Integer offset,
+                                                                @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                                                @RequestParam(value = "sortBy", required = false) String sortBy) {
+        if(null == offset) offset = 0;
+        if(null == pageSize) pageSize = 10;
+        if(StringUtils.isEmpty(sortBy)) sortBy ="id";
+        return new ResponseEntity<>(provinceService.getAllProvincePagination(PageRequest.of(offset, pageSize, Sort.by(sortBy))), HttpStatus.OK);
     }
 
     @GetMapping("/allRegency")
@@ -55,13 +60,13 @@ public class RegionController {
 
     @GetMapping("/provinceRegency")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<ProvinceRegencyResponse> allProvinceRegency() {
-        return provinceService.getProvincesWithRegencies();
+    public ResponseEntity<List<ProvinceRegencyResponse>> allProvinceRegency() {
+        return new ResponseEntity<>(provinceService.getProvincesWithRegencies(), HttpStatus.OK);
     }
 
     @GetMapping("/provinceRegency/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ProvinceRegencyResponse provinceRegencyById(@PathVariable Long id) {
-        return provinceService.getProvincesWithRegenciesById(id);
+    public ResponseEntity<ProvinceRegencyResponse> provinceRegencyById(@PathVariable Long id) {
+        return new ResponseEntity<>(provinceService.getProvincesWithRegenciesById(id), HttpStatus.OK);
     }
 }
