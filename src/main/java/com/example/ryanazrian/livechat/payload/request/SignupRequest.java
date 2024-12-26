@@ -1,8 +1,9 @@
 package com.example.ryanazrian.livechat.payload.request;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
-
-import javax.validation.constraints.*;
 
 public class SignupRequest {
     @NotBlank
@@ -19,6 +20,8 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    private Long provinceId;
 
     public String getUsername() {
         return username;
@@ -50,5 +53,13 @@ public class SignupRequest {
 
     public void setRole(Set<String> role) {
         this.role = role;
+    }
+
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
     }
 }

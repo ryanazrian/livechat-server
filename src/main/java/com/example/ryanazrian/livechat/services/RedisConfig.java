@@ -3,6 +3,7 @@ package com.example.ryanazrian.livechat.services;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -14,11 +15,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+    @Value("${spring.redis.host:localhost}") // Default to 'localhost' if not set
+    private String redisHost;
+
+    @Value("${spring.redis.port:6379}") // Default to 6379 if not set
+    private int redisPort;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName("localhost");
-        jedisConnectionFactory.setPort(6379);
+        jedisConnectionFactory.setHostName(redisHost);
+        jedisConnectionFactory.setPort(redisPort);
         // Optional: Uncomment to set password if Redis requires authentication
         // jedisConnectionFactory.setPassword("yourpassword");
         return jedisConnectionFactory;

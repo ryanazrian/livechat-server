@@ -74,6 +74,10 @@ public class ProvinceService {
         return provinceResponse;
     }
 
+    public Province getProvinceByIdDirect(Long id) {
+        return (Province) provinceRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Province not found"));
+    }
+
     public List<ProvinceRegencyResponse> getProvincesWithRegencies() {
         return provinceRepository.findAll().stream()
                 .map(province -> new ProvinceRegencyResponse(

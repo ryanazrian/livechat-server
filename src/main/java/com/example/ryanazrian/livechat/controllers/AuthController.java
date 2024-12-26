@@ -1,6 +1,7 @@
 package com.example.ryanazrian.livechat.controllers;
 
 import com.example.ryanazrian.livechat.model.ERole;
+import com.example.ryanazrian.livechat.model.Province;
 import com.example.ryanazrian.livechat.model.Role;
 import com.example.ryanazrian.livechat.model.User;
 import com.example.ryanazrian.livechat.payload.request.LoginRequest;
@@ -12,6 +13,7 @@ import com.example.ryanazrian.livechat.payload.response.UserResponse;
 import com.example.ryanazrian.livechat.repository.RoleRepository;
 import com.example.ryanazrian.livechat.repository.UserRepository;
 import com.example.ryanazrian.livechat.security.jwt.JwtUtils;
+import com.example.ryanazrian.livechat.services.ProvinceService;
 import com.example.ryanazrian.livechat.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,9 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    ProvinceService provinceService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -119,6 +124,9 @@ public class AuthController {
             });
         }
 
+        Province province = provinceService.getProvinceByIdDirect(signUpRequest.getProvinceId());
+
+        user.setProvince(province);
         user.setRoles(roles);
         userRepository.save(user);
 

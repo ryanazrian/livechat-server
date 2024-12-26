@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.example.ryanazrian</groupId>
 	<artifactId>livechat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging> <!-- Ensure correct packaging -->
+
 	<name>livechat</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -60,13 +64,15 @@
 			</exclusions>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<!-- H2 Database -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- MySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -78,37 +84,42 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- Untuk Koneksi ke Database -->
+		<!-- JPA Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!-- Untuk Security -->
+		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-<!--			<version>1.18.30</version>-->
-<!--			<scope>provided</scope>-->
+			<!-- Uncomment if you need version control -->
+			<!-- <version>1.18.30</version> -->
+			<!-- <scope>provided</scope> -->
 		</dependency>
 
+		<!-- JWT -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
 
+		<!-- Spring Data Redis -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 			<version>2.2.5.RELEASE</version> <!-- Matches Spring Boot 2.2.5 -->
 		</dependency>
 
+		<!-- Jedis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
@@ -121,8 +132,24 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.2.5.RELEASE</version> <!-- Ensure this matches your Spring Boot version -->
+				<!-- Add a configuration section for the Spring Boot plugin if needed -->
+			</plugin>
+
+			<!-- Ensure maven-jar-plugin is defined correctly -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.example.ryanazrian.livechat.LivechatApplication</mainClass> <!-- Update with your main class -->
+						</manifest>
+					</archive>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
