@@ -2,9 +2,11 @@ package com.example.ryanazrian.livechat.payload.request;
 
 import com.example.ryanazrian.livechat.model.EStatus;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class TaskEditRequest {
+    @NotNull(message = "Please enter id")
     private UUID id;
 
     private String title;
